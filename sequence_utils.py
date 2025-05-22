@@ -1,8 +1,19 @@
 from Bio import SeqIO
 
-record = next(SeqIO.parse("Homo_sapiens_INS_sequence.fasta", "fasta"))
-sequence = record.seq
-print(f"Loaded sequence: {sequence}")
+def load_data(file):
+    """Load a fasta file and return the first sequence record.
+
+    Args:
+        file_path (str): Path to the fasta file.
+
+    Returns:
+        Bio.SeqRecord.SeqRecord: The first sequence record in the fasta file.
+    """
+    with open(file, "r") as fasta_file:
+        seq_record = SeqIO.read(fasta_file, "fasta")
+    return seq_record.seq
+
+
 
 def gc_content(seq):
     g = seq.count("G")
