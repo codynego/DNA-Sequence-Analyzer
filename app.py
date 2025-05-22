@@ -57,22 +57,23 @@ if uploaded_file:
     # Process the selected sequence
     with st.spinner("🧪 Running sequence analysis..."):
         result = process_sequence(seq)
-        print(result)
+        # print(result["rna"])
 
         # Show results
         st.subheader("🧪 GC Content")
         st.write(f"{gc_content(seq)}%")
 
         st.subheader("🔁 Reverse Complement")
-        st.code(str(reverse_complement(seq)), language="text")
-        #st.code(str(result["rev_comp"]), language="text")
+        #st.code(str(reverse_complement(seq)), language="text")
+        st.code(str(result["rev_comp"]), language="text")
 
         st.subheader("🔤 Transcribed RNA")
-        st.code(str(sequence_transcribe(seq)), language="text")
-        #st.code(str(result["rna"]), language="text")
+        #st.code(str(sequence_transcribe(seq)), language="text")
+        st.code(str(result["rna"]), language="text")
 
         st.subheader("🧬 Protein Translation")
-        st.code(str(translate_rna(seq)), language="text")
+        # st.code(str(translate_rna(seq)), language="text")
+        st.code(str(result["protein"]), language="text")
 
         # Motif Search
         st.subheader("🔎 Motif Search")
