@@ -1,33 +1,15 @@
+import streamlit as st
 from Bio import SeqIO
 
-record = next(SeqIO.parse("Homo_sapiens_INS_sequence.fasta", "fasta"))
-sequence = record.seq
-print(f"Loaded sequence: {sequence}")
+st.title("DNA Sequence Analyzer")
 
-def gc_content(seq):
-    g = seq.count("G")
-    c = seq.count("C")
-    return round((g + c) / len(seq) * 100, 2)
+uploaded_file = st.file_uploader("Upload a FASTA file", type=["fasta", "fa"])
 
-def reverse_compliment(seq):
-    return seq.reverse_compliment()  
-
-def sequence_transcribe(seq):
-    """Convert Dna to Rna
-
-    Args:
-        seq (_type_): The dna sequence to transcribe
-    """
-
-    return seq.transcribe()
-
-def translate(rna_seq):
-    """Making Protein from RNA
-
-    Args:
-        seq (_type_): The rna sequence
-    """
-    return rna_seq.translate()
-
-def find_motif(seq, motif):
-    return [i for i in range(len(seq)) if seq[i:i+len(motif)] == motif]
+if uploaded_file:
+    record = next(SeqIO.parse(uploaded_file, "fasta"))
+    seq = record.seq
+    st.write(f"Sequence length: {len(seq)}")
+    st.write(f"GC Content: {(seq.count('G') + seq.count('C')) / len(seq) * 100:.2f}%")
+    st.write(f"Reverse Complement: {seq.reverse_complement()}")
+    st.write(f"Transcribed RNA: {seq.transcribe()}")
+    st.write(f"Translated Protein: {seq.transcribe().translate()}")
